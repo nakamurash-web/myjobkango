@@ -226,7 +226,124 @@ html:not(.kw-yakin-nashi):not(.kw-fukushoku):not(.kw-clinic) .kw-block.default {
 
 ---
 
-## 付録: 解析に使った主なファイル
+## 10. 参考リンク集
+
+### 解析対象サイトで使われていたツール
+- **Readdy（AIサイトビルダー / 当サイトの生成元）** — https://readdy.ai/ （日本語: https://readdy.ai/ja ）
+  - 解説記事: https://note.com/55clotho/n/n9ad89a8d9472 / https://roboin.io/article/2026/05/12/readdy-ai-website-builder-features-and-how-to-use/
+- **Microsoft Clarity（ヒートマップ/セッション録画）** — https://clarity.microsoft.com/
+- **Google アナリティクス (GA4)** — https://analytics.google.com/
+- **Google タグマネージャー (GTM)** — https://tagmanager.google.com/
+
+### 広告URLに検索KWを渡す（出し分けの入口）
+- **Google広告 ValueTrack `{keyword}` について** — https://support.google.com/google-ads/answer/2375447?hl=ja
+- **Google広告 ValueTrack でトラッキングを設定** — https://support.google.com/google-ads/answer/6305348?hl=ja
+- **Google広告 ValueTrack の活用方法** — https://support.google.com/google-ads/answer/6305529?hl=ja
+- **Yahoo!/LINEヤフー広告 トラッキングURL・カスタムパラメータ（検索広告）** — https://ads-help.yahoo-net.jp/s/article/H000044782?language=ja
+- **Yahoo!広告 トラッキング用パラメータ** — https://ads-help.yahoo.co.jp/yahooads/ss/articledetail?lan=ja&aid=1061
+- 解説（外部）: ValueTrackとは — https://anagrams.jp/blog/how-to-valuetrack-parameter/
+
+> 補足: 参考サイトの `?st=` は独自命名のパラメータ。広告管理画面でファイナルURL/トラッキングテンプレートを `{lpurl}?st={keyword}` のように設定すると、検索語が `st` に自動で入る。
+
+### Squad beyond（再現先のツール）
+- **製品・機能** — https://squadbeyond.com/product/ / 概要 — https://squadbeyond.com/overview/
+- **Squad beyondとは（機能/事例）** — https://squadbeyond.com/blog/what_is_squadbeyond/
+- **ブランチオペレーション（出し分け/最適パターン診断）資料** — https://service.squadbeyond.com/download/branch-operation/
+- **配信割合最適化（AIによるCPA改善・ブランチ新機能）** — https://blog.squadbeyond.com/branchoperation_new
+- **よく使う機能（コミュニティ）** — https://service.squadbeyond.com/voice/communities/discussion/1747/
+- 第三者比較: https://liskul.com/squad-beyond-166351 / https://leango.co.jp/dejam/blog/article0276/
+
+### 実装の基礎技術（MDN）
+- **URLSearchParams（URLパラメータ読取）** — https://developer.mozilla.org/ja/docs/Web/API/URLSearchParams
+- **Element.classList（クラス付与）** — https://developer.mozilla.org/ja/docs/Web/API/Element/classList
+- **Node.textContent（XSS安全なテキスト挿入）** — https://developer.mozilla.org/ja/docs/Web/API/Node/textContent
+
+---
+
+## 11. 用語集
+
+| 用語 | 意味 |
+|---|---|
+| **ファーストビュー（FV）** | ページを開いた瞬間に見える最上部の領域。CV率を最も左右する。 |
+| **リスティング広告** | 検索連動型広告（Google/Yahoo）。ユーザーの検索KWに対して出る広告。 |
+| **ValueTrack `{keyword}`** | 広告のリンク先URLに、実際にユーザーが検索したKW等を自動差し込みする仕組み。 |
+| **`?st=`（検索語パラメータ）** | 参考サイトが検索KWを受け取るために使う独自URLパラメータ（`search term` の略と推定）。 |
+| **出し分け** | 流入元（KW/広告/エリア等）に応じて表示するコンテンツを変えること。 |
+| **Branch Operation（ブランチ/分岐）** | Squad beyond の機能。広告/パラメータに応じて配信する記事バージョンを切り替える。コード不要。 |
+| **HTMLエディタ版（beyond）** | beyond の記事形式の一つ。生のHTML/CSS/JSをそのまま入稿できるため、参考サイトの手法を移植可能。 |
+| **動的差し込み** | トークン（例 `{area}`）を流入情報で置換する機能。 |
+| **プログラマティックSEO** | テンプレに地域名等を流し込み、大量のページを自動生成してSEO流入を狙う手法（"中央区"ページがこれ）。 |
+| **クリックID（gclid等）** | 広告クリックを一意に識別するID。CV計測の突合に使う。アフィリンクへ引き継ぐ必要がある。 |
+| **CLS（Cumulative Layout Shift）** | 表示ズレの指標。JSで後からFVを書き換えると一瞬チラつくため要対策。 |
+| **CV（コンバージョン）** | 成果地点（会員登録・申込等）。 |
+
+---
+
+## 付録A: 全部入りコピペ用スニペット（beyond HTMLエディタ想定）
+
+`<head>` のできるだけ上部に置く（チラつき防止のため、まず非表示CSS→判定JSの順）。
+
+```html
+<!-- 1) KW別ブロックは既定で非表示にしておく（チラつき防止のため最優先で読む） -->
+<style>
+  .kw-block, .age20s-badge, .age30s-badge { display: none; }
+  html.age20s .age20s-badge,
+  html.age30s .age30s-badge { display: block; animation: .5s ease-out ageBadgeSlideIn; }
+  html.kw-yakin-nashi .kw-block.yakin-nashi,
+  html.kw-fukushoku   .kw-block.fukushoku,
+  html.kw-clinic      .kw-block.clinic { display: block; }
+  /* どのKWにも当たらない（直アクセス含む）場合のデフォルト */
+  html:not(.kw-yakin-nashi):not(.kw-fukushoku):not(.kw-clinic) .kw-block.default { display: block; }
+  @keyframes ageBadgeSlideIn { from { opacity:0; transform:translateY(-6px);} to { opacity:1; transform:none;} }
+</style>
+
+<!-- 2) 検索KW(?st=)とエリア(?area=)を読み、<html>にクラス付与＆エリア名差し込み -->
+<script>
+(function () {
+  var p   = new URLSearchParams(location.search);
+  var st  = decodeURIComponent(p.get("st")   || "");
+  var area= decodeURIComponent(p.get("area") || "");
+  var grp = (p.get("grp") || "").toLowerCase();
+  var h   = document.documentElement;
+
+  // 条件軸
+  if (/夜勤(なし|無し|専従なし)/.test(st)) h.classList.add("kw-yakin-nashi");
+  if (/ブランク|復職|復帰/.test(st))      h.classList.add("kw-fukushoku");
+  if (/クリニック|外来/.test(st))         h.classList.add("kw-clinic");
+  // 年代軸
+  if (/(20代|2[0-9]歳)/.test(st)) h.classList.add("age20s");
+  else if (/(30代|3[0-9]歳)/.test(st)) h.classList.add("age30s");
+  // KWグループ（広告側から明示。除外KW設計で意図純度を担保）
+  if (grp) h.classList.add("grp-" + grp.replace(/[^a-z0-9_-]/g, ""));
+
+  // エリア名の差し込み（XSS回避のため textContent を使用）
+  if (area) {
+    document.querySelectorAll("[data-area-token]").forEach(function (el) {
+      el.textContent = el.getAttribute("data-area-token").replace(/\{area\}/g, area);
+    });
+  }
+})();
+</script>
+```
+
+```html
+<!-- 3) 本文側：KW別ブロック＋エリアトークン -->
+<h1 data-area-token="{area}で駅近・好条件の看護師求人">あなたのエリアで駅近・好条件の看護師求人</h1>
+
+<section class="kw-block yakin-nashi">夜勤なしで働ける求人特集 …</section>
+<section class="kw-block fukushoku">ブランクOK・復職支援が手厚い求人 …</section>
+<section class="kw-block clinic">クリニック・外来の日勤求人 …</section>
+<section class="kw-block default">あなたに合う看護師求人を厳選 …</section>
+
+<span class="age20s-badge">20代の転職に強い！</span>
+<span class="age30s-badge">30代のキャリアアップ向け！</span>
+```
+
+> 広告側ファイナルURL例: `https://example.com/lp?st={keyword}&area=中央区&grp=yakin`
+
+---
+
+## 付録B: 解析に使った主なファイル
 
 | ファイル | 内容 |
 |---|---|
