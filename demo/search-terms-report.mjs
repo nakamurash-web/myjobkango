@@ -6,7 +6,8 @@
 import fs from 'fs';
 const html = fs.readFileSync(new URL('./nurse-lp-demo.html', import.meta.url),'utf8');
 const segJs = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m=>m[1])
-  .find(s=>s.includes('classList.add("kw-yakin-nashi")'));
+  .find(s=>s.includes('__lpSegmentInit'));
+if(!segJs){console.error('判定スクリプトが見つかりません');process.exit(1);}
 
 function classify(kw){
   const c=new Set();
@@ -14,7 +15,7 @@ function classify(kw){
     sessionStorage:{getItem:()=>null,setItem:()=>{}},
     document:{documentElement:{classList:{add:x=>c.add(x)}},addEventListener:()=>{},querySelectorAll:()=>[]}};
   new Function(...Object.keys(sb),segJs)(...Object.values(sb));
-  return [...c].find(x=>x.startsWith('kw-'))?.replace('kw-','')||'none';
+  return [...c].find(x=>x.startsWith('kw-')&&x!=='kw-matched')?.replace('kw-','')||'none';
 }
 
 // ---- 決定論的PRNG（再現性のため）----
@@ -40,11 +41,15 @@ const INTENTS=[
   // クリニック
   ['クリニック','clinic',4],['外来','clinic',2],['美容クリニック','clinic',3],['美容看護師','clinic',2],
   ['美容外科','clinic',1],['眼科クリニック','clinic',1],['内科クリニック','clinic',1],['皮膚科クリニック','clinic',1],
+  // 夜勤専従 / 治験 / 高収入（新バケット）
+  ['夜勤専従','yakin-senju',2],['夜勤バイト','yakin-senju',1],['夜勤のみ','yakin-senju',1],
+  ['治験','chiken',1],['CRC','chiken',1],['治験コーディネーター','chiken',1],
+  ['高収入','kounyuu',4],['高給','kounyuu',1],['高時給','kounyuu',1],['年収600万','kounyuu',1],
   // none（条件バケット無し＝デフォルト訴求が正）— ロングテールの“他意図”
-  ['高収入','none',4],['高給','none',1],['訪問看護','none',3],['派遣','none',2],['単発','none',2],
+  ['訪問看護','none',3],['派遣','none',2],['単発','none',2],
   ['パート','none',3],['正社員','none',2],['託児所あり','none',1],['寮あり','none',1],['残業なし','none',2],
-  ['残業少ない','none',1],['オペ室','none',1],['ICU','none',1],['健診','none',1],['治験','none',1],
-  ['透析','none',1],['夜勤専従','none',2],['給料','none',1],['','none',8], // 修飾なし=超generic
+  ['残業少ない','none',1],['オペ室','none',1],['ICU','none',1],['健診','none',1],
+  ['透析','none',1],['給料','none',1],['','none',8], // 修飾なし=超generic
 ];
 
 // ---- 生成 ----
@@ -67,7 +72,7 @@ for(let i=rows.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[rows[i],rows[j
 rows.forEach((r,i)=>{ r.imp=Math.max(3,Math.round(4000/(i+3)*(0.6+rnd()*0.8))); r.clk=Math.round(r.imp*(0.01+rnd()*0.05)); });
 
 // ---- 判定 ----
-const LABELS=['yakin-nashi','fukushoku','clinic','none'];
+const LABELS=['yakin-nashi','fukushoku','clinic','yakin-senju','chiken','kounyuu','none'];
 const conf={};LABELS.forEach(a=>{conf[a]={};LABELS.forEach(b=>conf[a][b]=0);});
 let qOK=0, impTotal=0, impPersonalized=0, impMisfire=0, impCorrect=0;
 const noneClusters={};

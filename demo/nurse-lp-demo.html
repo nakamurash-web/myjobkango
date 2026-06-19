@@ -22,15 +22,17 @@
 
   /* 出し分けブロックは既定で全部非表示 */
   .kw-block,.age20s-badge,.age30s-badge{display:none}
-  /* <html>のクラスに一致したものだけ表示 */
-  html.kw-yakin-nashi .kw-block.yakin-nashi,
-  html.kw-fukushoku   .kw-block.fukushoku,
-  html.kw-clinic      .kw-block.clinic{display:block;animation:fadeIn .5s ease-out}
-  html.kw-yakin-nashi .kw-block.default,
-  html.kw-fukushoku   .kw-block.default,
-  html.kw-clinic      .kw-block.default{display:none}
-  /* どのKWにも当たらない（直アクセス含む）→ デフォルト訴求 */
+  /* どのKWにも当たらない（直アクセス含む）→ デフォルト訴求を表示 */
   .kw-block.default{display:block}
+  /* いずれかの条件にマッチしたら（kw-matched）デフォルトは引っ込める */
+  html.kw-matched .kw-block.default{display:none}
+  /* <html>のクラスに一致したブロックだけ表示（新バケット追加はここに足すだけ）*/
+  html.kw-yakin-nashi  .kw-block.yakin-nashi,
+  html.kw-fukushoku    .kw-block.fukushoku,
+  html.kw-clinic       .kw-block.clinic,
+  html.kw-yakin-senju  .kw-block.yakin-senju,
+  html.kw-chiken       .kw-block.chiken,
+  html.kw-kounyuu      .kw-block.kounyuu{display:block;animation:fadeIn .5s ease-out}
   /* 年代バッジ */
   html.age20s .age20s-badge,html.age30s .age30s-badge{display:inline-block;animation:fadeIn .5s ease-out}
   @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
@@ -96,11 +98,17 @@
 
   // --- 条件軸（正規表現でゆるくマッチ＝何百KWを数パターンに集約）---
   // ※ 検索語はスペース区切りのことが多いので [\s　]* で語間を吸収する
-  // ※ KWは重複しうる（例「外来 日勤のみ」）。else-ifの順＝優先順位を
-  //    「夜勤なし > ブランク復職 > クリニック」と明示的に定義する。
-  if (/夜勤[\s　]*(なし|無し|専従なし|したくない|やりたくない|嫌|回避|少なめ|少ない|減らし)|日勤[\s　]*(のみ|だけ|希望)/.test(st)) h.classList.add("kw-yakin-nashi");
-  else if (/ブランク|復職|復帰|離職|ママ|主婦|潜在(看護|准看)/.test(st)) h.classList.add("kw-fukushoku");
-  else if (/クリニック|外来|美容/.test(st))             h.classList.add("kw-clinic");
+  // ※ KWは重複しうる。else-ifの順＝優先順位を明示的に定義（具体的な意図ほど先、
+  //    高収入は他に当たらない時だけ発火）：
+  //    夜勤なし ＞ ブランク復職 ＞ クリニック ＞ 夜勤専従 ＞ 治験 ＞ 高収入
+  var cond = "";
+  if (/夜勤[\s　]*(なし|無し|専従なし|したくない|やりたくない|嫌|回避|少なめ|少ない|減らし)|日勤[\s　]*(のみ|だけ|希望)/.test(st)) cond = "yakin-nashi";
+  else if (/ブランク|復職|復帰|離職|ママ|主婦|潜在(看護|准看)/.test(st)) cond = "fukushoku";
+  else if (/クリニック|外来|美容/.test(st)) cond = "clinic";
+  else if (/夜勤専従|夜勤専門|夜勤[\s　]*(のみ|だけ|バイト|パート|募集)/.test(st)) cond = "yakin-senju";
+  else if (/治験|臨床試験|ＣＲＣ|CRC|治験コーディネーター/i.test(st)) cond = "chiken";
+  else if (/高収入|高給|高時給|高年収|稼ぎたい|稼げる|年収[0-9０-９]/.test(st)) cond = "kounyuu";
+  if (cond) { h.classList.add("kw-" + cond); h.classList.add("kw-matched"); }
 
   // --- 年代軸 ---
   if (/(20代|2[0-9]歳)/.test(st)) h.classList.add("age20s");
@@ -148,6 +156,18 @@
     <div class="kw-block clinic">
       <h1 data-area-token="{area}のクリニック・外来（日勤）求人">クリニック・外来（日勤）の求人</h1>
       <p class="lead">残業少なめ・オンオフ重視。クリニック求人に特化。</p>
+    </div>
+    <div class="kw-block yakin-senju">
+      <h1 data-area-token="{area}の夜勤専従・高収入の看護師求人">夜勤専従で効率よく稼ぐ看護師求人</h1>
+      <p class="lead">少ない出勤数で高収入。夜勤専従・夜勤バイトを厳選。</p>
+    </div>
+    <div class="kw-block chiken">
+      <h1 data-area-token="{area}の治験（CRC・治験コーディネーター）求人">治験・CRCの看護師求人</h1>
+      <p class="lead">日勤中心・土日休みが多い治験業界。未経験可の求人も。</p>
+    </div>
+    <div class="kw-block kounyuu">
+      <h1 data-area-token="{area}の高収入・高給与の看護師求人">高収入・高給与の看護師求人</h1>
+      <p class="lead">年収アップ重視のあなたへ。高給与求人を厳選比較。</p>
     </div>
     <div class="kw-block default">
       <h1 data-area-token="{area}であなたに合う看護師求人">あなたに合う看護師求人を無料でご紹介</h1>
@@ -204,6 +224,18 @@
   <div class="kw-block clinic">
     <h2>クリニック転職のメリットと注意点</h2>
     <p>残業・オンコールの実態、給与レンジ、人気クリニックの探し方。（デモ本文）</p>
+  </div>
+  <div class="kw-block yakin-senju">
+    <h2>夜勤専従で収入を最大化するには</h2>
+    <p>1回あたりの夜勤手当の相場、月の出勤数の目安、体調管理のコツ。（デモ本文）</p>
+  </div>
+  <div class="kw-block chiken">
+    <h2>治験・CRCへの転職ガイド</h2>
+    <p>仕事内容、年収レンジ、未経験からの入り方、向いている人。（デモ本文）</p>
+  </div>
+  <div class="kw-block kounyuu">
+    <h2>高収入の看護師求人を見極めるポイント</h2>
+    <p>給与の内訳（基本給・夜勤手当・賞与）、好条件求人の探し方。（デモ本文）</p>
   </div>
   <div class="kw-block default">
     <h2>はじめての看護師転職の進め方</h2>

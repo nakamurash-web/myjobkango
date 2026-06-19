@@ -3,7 +3,7 @@ const FILE=new URL('./nurse-lp-demo.html', import.meta.url);
 const html = fs.readFileSync(FILE,'utf8');
 
 const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
-const segJs = scripts.find(s=>s.includes('classList.add("kw-yakin-nashi")'));
+const segJs = scripts.find(s=>s.includes('__lpSegmentInit'));
 if(!segJs){console.error('判定スクリプトが見つかりません');process.exit(1);}
 
 function run(search){
@@ -33,7 +33,9 @@ const cases=[
   ['?st='+E('美容クリニック 看護師'),        ['kw-clinic']],
   ['?st='+E('外来 看護師 求人'),             ['kw-clinic']],          // 純クリニック
   ['?st='+E('看護師 外来 日勤のみ'),         ['kw-yakin-nashi']],     // 優先: 夜勤なし>クリニック
-  ['?st='+E('看護師 夜勤専従 高収入'),       []],                     // 夜勤希望→誤検出しない
+  ['?st='+E('看護師 夜勤専従 高収入'),       ['kw-yakin-senju']],     // 優先: 夜勤専従>高収入
+  ['?st='+E('看護師 高収入 求人'),           ['kw-kounyuu']],
+  ['?st='+E('治験 看護師 CRC'),              ['kw-chiken']],
   ['?st='+E('20代 看護師 転職'),             ['age20s']],
   ['?st='+E('看護師 夜勤なし 30代'),         ['kw-yakin-nashi','age30s']],
   ['',                                       []],                     // 直アクセス
@@ -42,7 +44,7 @@ const cases=[
 let ok=0,ng=0;
 console.log('=== 出し分け判定テスト（実コード実行）===');
 for(const [search,expect] of cases){
-  const got=run(search).classes.filter(c=>!c.startsWith('grp-'));
+  const got=run(search).classes.filter(c=>!c.startsWith('grp-')&&c!=='kw-matched');
   const pass=expect.every(e=>got.includes(e))&&got.length===expect.length;
   console.log((pass?'✅':'❌')+'  '+decodeURIComponent(search||'(直アクセス)').slice(0,30).padEnd(30)+' → ['+got.join(', ')+']');
   pass?ok++:ng++;

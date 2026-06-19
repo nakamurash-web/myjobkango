@@ -4,7 +4,7 @@
 import fs from 'fs';
 const html = fs.readFileSync(new URL('./nurse-lp-demo.html', import.meta.url), 'utf8');
 const segJs = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m=>m[1])
-  .find(s=>s.includes('classList.add("kw-yakin-nashi")'));
+  .find(s=>s.includes('__lpSegmentInit'));
 if(!segJs){console.error('判定スクリプトが見つかりません');process.exit(1);}
 
 // 実コードを走らせ、付与された条件クラス/年代クラスを返す
@@ -16,7 +16,7 @@ function classify(kw){
     document:{documentElement:{classList:{add:c=>classes.add(c)}},addEventListener:()=>{},querySelectorAll:()=>[]}
   };
   new Function(...Object.keys(sandbox),segJs)(...Object.values(sandbox));
-  const cond = [...classes].find(c=>c.startsWith('kw-'))?.replace('kw-','') || 'none';
+  const cond = [...classes].find(c=>c.startsWith('kw-')&&c!=='kw-matched')?.replace('kw-','') || 'none';
   const age  = [...classes].find(c=>c.startsWith('age')) || 'none';
   return {cond, age};
 }
@@ -51,11 +51,20 @@ const DATA = [
   ['皮膚科 看護師 求人','none'],   // ★科目のみ＝バケットなし→default(none)が正
   ['内科 クリニック 看護師','clinic'],
 
+  // --- 夜勤専従（夜勤“希望”。夜勤なしと誤判定しないこと）---
+  ['看護師 夜勤専従','yakin-senju'], ['夜勤専従 看護師 高収入','yakin-senju'], // 優先:専従>高収入
+  ['看護師 夜勤バイト','yakin-senju'], ['夜勤のみ 看護師 求人','yakin-senju'],
+
+  // --- 治験 ---
+  ['治験 看護師 求人','chiken'], ['看護師 CRC 転職','chiken'],
+  ['治験コーディネーター 看護師','chiken'], ['臨床試験 看護師','chiken'],
+
+  // --- 高収入（他の具体意図に当たらない時だけ）---
+  ['看護師 高収入','kounyuu'], ['看護師 高給 求人','kounyuu'],
+  ['看護師 高時給 派遣','kounyuu'], ['看護師 年収600万','kounyuu'],
+
   // --- none（条件バケットなし＝default表示が正）---
   ['看護師 求人','none'], ['看護師 転職','none'], ['看護師 転職サイト おすすめ','none'],
-  ['看護師 高収入','none'], ['看護師 高給 求人','none'],
-  ['看護師 夜勤専従','none'],            // ★夜勤“希望”→夜勤なしと誤判定しないこと
-  ['夜勤専従 看護師 高収入','none'],
   ['訪問看護 求人','none'], ['訪問看護師 転職','none'],
   ['看護師 派遣','none'], ['看護師 単発 バイト','none'], ['看護師 パート','none'],
   ['看護師 正社員','none'], ['オペ室 看護師 求人','none'], ['ICU 看護師 求人','none'],
@@ -64,7 +73,7 @@ const DATA = [
 ];
 
 // ===== 条件軸の評価 =====
-const LABELS=['yakin-nashi','fukushoku','clinic','none'];
+const LABELS=['yakin-nashi','fukushoku','clinic','yakin-senju','chiken','kounyuu','none'];
 const conf={}; LABELS.forEach(a=>{conf[a]={}; LABELS.forEach(b=>conf[a][b]=0);});
 const miss=[];
 let correct=0;
