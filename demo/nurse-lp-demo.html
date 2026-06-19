@@ -86,6 +86,8 @@
      ============================================================ -->
 <script>
 (function(){
+  if (window.__lpSegmentInit) return;   // beyondが二重挿入しても1回だけ
+  window.__lpSegmentInit = true;
   var p    = new URLSearchParams(location.search);
   var st   = decodeURIComponent(p.get("st")   || "");
   var area = decodeURIComponent(p.get("area") || "");

@@ -10,6 +10,7 @@ function run(search){
   const classes=new Set(); const store={};
   const tokenEl={_t:'{area}で看護師求人',getAttribute(){return this._t;},set textContent(v){this._o=v;},get textContent(){return this._o;}};
   const sandbox={
+    window:{},                       // 冪等ガード用（runごとに新規＝毎回実行される）
     location:{search,href:'https://demo.test/'+search},
     URLSearchParams, decodeURIComponent,
     sessionStorage:{getItem:k=>store[k]??null,setItem:(k,v)=>{store[k]=v;}},
