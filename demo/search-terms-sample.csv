@@ -1,0 +1,281 @@
+query,impressions,clicks,truth,predicted
+"転職 夜勤専従 35歳 准看護師",1423,29,none,none
+"夜勤なし 50代 求人 准看護師",843,24,yakin-nashi,yakin-nashi
+"看護師 治験 転職",760,18,none,none
+"美容クリニック 採用 35歳 名古屋 ナース",698,14,clinic,clinic
+"ナース 新宿区 25歳 クリニック 転職",654,17,clinic,clinic
+"40代 転職サイト 横浜 准看護師 高収入",502,22,none,none
+"看護師 転職 治験 札幌",457,16,none,none
+"新宿区 転職サイト 看護師 夜勤無し",451,6,yakin-nashi,yakin-nashi
+"日勤のみ 転職サイト 准看護師",356,5,yakin-nashi,yakin-nashi
+"ブランク 准看護師 20代 東京",322,13,fukushoku,fukushoku
+"ナース 高収入 千葉",300,11,none,none
+"札幌 准看護師 寮あり 採用",291,17,none,none
+"潜在看護師 駅近 採用 准看護師",260,8,fukushoku,fukushoku
+"採用 日勤のみ 看護師 中央区",256,12,yakin-nashi,yakin-nashi
+"准看護師 健診 福岡 募集 40代",233,7,none,none
+"看護師 千葉 求人 クリニック",232,9,clinic,clinic
+"ナース 美容外科 募集 沿線",219,3,clinic,clinic
+"外来 転職サイト ナース 大阪",186,7,clinic,clinic
+"ナース 25歳 美容外科 新宿区",184,9,clinic,clinic
+"求人 おすすめ 准看護師 40代 ブランク",171,7,fukushoku,fukushoku
+"ブランク 求人 おすすめ 看護師",167,2,fukushoku,fukushoku
+"クリニック 准看護師 50代 求人",165,6,clinic,clinic
+"単発 25歳 准看護師 新宿区 募集",155,7,none,none
+"パート ナース 駅近 転職",150,3,none,none
+"転職 日勤だけ 准看護師 駅近",140,6,yakin-nashi,yakin-nashi
+"准看護師 転職 夜勤なし 札幌",139,2,yakin-nashi,yakin-nashi
+"准看護師 採用 中央区 復帰 50代",134,5,fukushoku,fukushoku
+"40代 夜勤なし 看護師 採用",133,3,yakin-nashi,yakin-nashi
+"ナース 日勤だけ 求人 おすすめ 駅近 25歳",131,2,yakin-nashi,yakin-nashi
+"准看護師 福岡 美容クリニック 30代",119,7,clinic,clinic
+"転職 中央区 託児所あり 准看護師",115,5,none,none
+"千葉 日勤のみ 50代 准看護師",114,3,yakin-nashi,yakin-nashi
+"募集 看護師 ブランクあり",113,5,fukushoku,fukushoku
+"新宿区 ナース 夜勤なし 20代",111,4,yakin-nashi,yakin-nashi
+"訪問看護 福岡 求人 看護師",111,3,none,none
+"求人 看護師 大阪 訪問看護",108,3,none,none
+"看護師 採用 クリニック 東京",105,2,clinic,clinic
+"美容クリニック 看護師 40代 沿線 求人",104,4,clinic,clinic
+"転職 看護師 40代",104,6,none,none
+"派遣 転職 看護師 25歳",103,4,none,none
+"求人 おすすめ 40代 中央区 看護師 ブランク",98,3,fukushoku,fukushoku
+"求人 看護師 正社員",96,3,none,none
+"50代 転職 夜勤なし ナース",95,2,yakin-nashi,yakin-nashi
+"40代 夜勤なし ナース 転職サイト",92,3,yakin-nashi,yakin-nashi
+"外来 看護師 30代 東京 求人",88,3,clinic,clinic
+"復帰 求人 おすすめ 東京 ナース",82,3,fukushoku,fukushoku
+"看護師 35歳 ブランク",80,3,fukushoku,fukushoku
+"日勤のみ 看護師 20代 駅近",77,5,yakin-nashi,yakin-nashi
+"看護師 復職 募集 沿線 20代",75,3,fukushoku,fukushoku
+"横浜 准看護師 日勤のみ 20代 転職",74,3,yakin-nashi,yakin-nashi
+"美容クリニック ナース",73,3,clinic,clinic
+"大阪 ナース 転職 40代",72,4,none,none
+"夜勤なし 求人 看護師",72,1,yakin-nashi,yakin-nashi
+"福岡 転職サイト 看護師",71,4,none,none
+"夜勤なし 駅近 看護師 25歳",71,3,yakin-nashi,yakin-nashi
+"ブランク 看護師 50代 募集",71,2,fukushoku,fukushoku
+"残業なし 募集 名古屋 看護師",71,3,none,none
+"札幌 看護師 20代 採用",71,1,none,none
+"沿線 看護師 単発 50代 転職サイト",70,2,none,none
+"准看護師 駅近 転職サイト 40代 単発",70,2,none,none
+"看護師 外来 沿線 30代",68,2,clinic,clinic
+"40代 転職 准看護師 託児所あり 大阪",67,3,none,none
+"採用 35歳 夜勤少なめ 看護師",66,3,yakin-nashi,yakin-nashi
+"残業なし ナース 東京 20代",66,2,none,none
+"40代 募集 看護師 駅近 日勤だけ",63,2,yakin-nashi,yakin-nashi
+"35歳 看護師 求人 夜勤少なめ 札幌",62,2,yakin-nashi,yakin-nashi
+"採用 子育て 復帰 看護師 25歳 中央区",61,4,fukushoku,fukushoku
+"ブランク 40代 大阪 准看護師",61,2,fukushoku,fukushoku
+"求人 おすすめ 看護師 25歳 単発 札幌",61,3,none,none
+"訪問看護 看護師 転職サイト 35歳",60,2,none,none
+"札幌 准看護師 20代 転職サイト 単発",59,3,none,none
+"日勤希望 35歳 募集 ナース 横浜",56,3,yakin-nashi,yakin-nashi
+"内科クリニック 准看護師 転職",55,2,clinic,clinic
+"求人 看護師 日勤のみ",55,1,yakin-nashi,yakin-nashi
+"日勤希望 求人 大阪 看護師",54,1,yakin-nashi,yakin-nashi
+"求人 夜勤専従 30代 准看護師 中央区",53,1,none,none
+"看護師 オペ室",53,2,none,none
+"30代 転職サイト 訪問看護 准看護師",51,1,none,none
+"ナース 東京",51,1,none,none
+"求人 40代 夜勤少なめ ナース",50,2,yakin-nashi,yakin-nashi
+"採用 看護師 ブランク 新宿区",49,2,fukushoku,fukushoku
+"日勤のみ 看護師 新宿区 30代 求人 おすすめ",49,1,yakin-nashi,yakin-nashi
+"大阪 転職 ナース パート 25歳",49,2,none,none
+"日勤だけ 沿線 ナース 転職 40代",48,1,yakin-nashi,yakin-nashi
+"クリニック 30代 大阪 転職サイト ナース",47,2,clinic,clinic
+"35歳 ナース 美容外科 採用",47,2,clinic,clinic
+"横浜 35歳 転職サイト 夜勤無し 看護師",47,2,yakin-nashi,yakin-nashi
+"求人 おすすめ ママナース 駅近 看護師",46,1,fukushoku,fukushoku
+"20代 看護師 パート 転職 横浜",46,2,none,none
+"新宿区 看護師 求人 高収入",45,2,none,none
+"高収入 ナース 求人 おすすめ 横浜",44,3,none,none
+"駅近 転職 准看護師 夜勤なし",44,2,yakin-nashi,yakin-nashi
+"名古屋 看護師 復帰 求人 おすすめ",43,0,fukushoku,fukushoku
+"残業なし 求人 駅近 看護師",42,1,none,none
+"看護師 札幌 パート 求人 おすすめ",42,1,none,none
+"正社員 看護師 50代 転職 福岡",41,2,none,none
+"ナース 福岡 クリニック 35歳",41,2,clinic,clinic
+"25歳 駅近 日勤希望 看護師 転職サイト",40,1,yakin-nashi,yakin-nashi
+"採用 夜勤なし 看護師 50代",40,2,yakin-nashi,yakin-nashi
+"横浜 訪問看護 求人 准看護師",39,2,none,none
+"ICU ナース 転職",38,2,none,none
+"復帰 看護師 募集 50代 中央区",38,2,fukushoku,fukushoku
+"大阪 ママナース 求人 看護師",38,1,fukushoku,fukushoku
+"ナース 転職 中央区 訪問看護",37,2,none,none
+"50代 大阪 准看護師 訪問看護 転職",37,1,none,none
+"透析 50代 求人 千葉 看護師",37,1,none,none
+"東京 採用 ブランク 准看護師",37,1,fukushoku,fukushoku
+"沿線 准看護師 高収入 35歳",37,1,none,none
+"ナース 40代 転職サイト ブランク",37,2,fukushoku,fukushoku
+"夜勤 したくない 看護師 求人 おすすめ 50代",36,2,yakin-nashi,yakin-nashi
+"大阪 35歳 求人 准看護師 夜勤専従なし",36,0,yakin-nashi,yakin-nashi
+"東京 25歳 夜勤無し 求人 おすすめ 看護師",36,1,yakin-nashi,yakin-nashi
+"高収入 看護師 駅近 20代",36,1,none,none
+"ママナース 横浜 看護師 転職サイト",35,1,fukushoku,fukushoku
+"大阪 パート 看護師",35,2,none,none
+"ナース 転職サイト 外来 40代 大阪",35,2,clinic,clinic
+"25歳 看護師 福岡 透析",35,1,none,none
+"駅近 看護師 募集 正社員",34,1,none,none
+"美容クリニック 35歳 駅近 転職 准看護師",34,2,clinic,clinic
+"求人 おすすめ 中央区 35歳 看護師",33,1,none,none
+"50代 沿線 潜在看護師 転職サイト 准看護師",33,2,fukushoku,fukushoku
+"ナース 千葉 夜勤専従",33,2,none,none
+"求人 准看護師 内科クリニック",33,1,clinic,clinic
+"駅近 子育て 復帰 ナース 40代",33,1,fukushoku,fukushoku
+"准看護師 復職 中央区 40代",32,1,fukushoku,fukushoku
+"美容外科 求人 准看護師",31,1,clinic,clinic
+"20代 看護師 東京 給料 求人",31,1,none,none
+"ナース 50代",31,1,none,none
+"眼科クリニック 看護師 30代 中央区 転職",31,1,clinic,clinic
+"求人 おすすめ 派遣 50代 駅近 ナース",30,1,none,none
+"求人 おすすめ 美容クリニック 看護師 20代",30,2,clinic,clinic
+"復帰 看護師 求人 20代",29,1,fukushoku,fukushoku
+"転職サイト オペ室 看護師 40代",29,2,none,none
+"求人 看護師 東京",29,1,none,none
+"看護師 40代 転職サイト",29,0,none,none
+"求人 おすすめ 30代 夜勤無し ナース 千葉",29,1,yakin-nashi,yakin-nashi
+"50代 日勤だけ 求人 おすすめ 看護師 福岡",29,1,yakin-nashi,yakin-nashi
+"採用 准看護師 派遣 40代 新宿区",29,0,none,none
+"30代 准看護師 日勤のみ 転職",28,1,yakin-nashi,yakin-nashi
+"東京 求人 准看護師 20代",28,2,none,none
+"准看護師 50代 募集 クリニック 千葉",28,1,clinic,clinic
+"准看護師 福岡 募集 美容看護師",28,1,clinic,clinic
+"転職サイト 札幌 オペ室 看護師 20代",27,1,none,none
+"求人 おすすめ 札幌 30代 准看護師",27,1,none,none
+"看護師 ママナース 40代 横浜 転職",27,1,fukushoku,fukushoku
+"採用 50代 看護師 福岡 夜勤なし",27,1,yakin-nashi,yakin-nashi
+"50代 ブランクあり 横浜 看護師 求人",27,1,fukushoku,fukushoku
+"転職 札幌 准看護師 40代 美容クリニック",27,0,clinic,clinic
+"名古屋 転職 30代 准看護師 パート",26,0,none,none
+"35歳 東京 復職 募集 看護師",26,1,fukushoku,fukushoku
+"東京 夜勤 したくない 准看護師 求人 おすすめ",26,2,yakin-nashi,yakin-nashi
+"外来 採用 看護師",26,1,clinic,clinic
+"採用 復職 准看護師 40代",26,0,fukushoku,fukushoku
+"治験 20代 看護師 千葉",26,0,none,none
+"ナース 募集 ブランク 千葉 20代",26,1,fukushoku,fukushoku
+"転職 准看護師 横浜 派遣",26,1,none,none
+"ナース 健診",26,1,none,none
+"看護師 オペ室 35歳 中央区",26,1,none,none
+"転職サイト 看護師 40代 オペ室",25,1,none,none
+"看護師 35歳 求人 おすすめ 東京 寮あり",24,1,none,none
+"看護師 オペ室 中央区 40代",24,1,none,none
+"福岡 看護師 50代 残業なし",24,1,none,none
+"横浜 美容クリニック 求人 おすすめ 看護師 30代",24,1,clinic,clinic
+"高給 看護師 30代 横浜",24,1,none,none
+"美容クリニック 転職 40代 准看護師",23,1,clinic,clinic
+"転職 ナース 30代 夜勤 減らしたい 新宿区",23,1,yakin-nashi,yakin-nashi
+"求人 横浜 看護師 クリニック",23,1,clinic,clinic
+"駅近 40代 求人 おすすめ 准看護師",23,1,none,none
+"看護師 50代 夜勤専従 沿線 転職サイト",23,0,none,none
+"20代 新宿区 託児所あり 募集 准看護師",23,1,none,none
+"25歳 求人 おすすめ ナース 子育て 復帰 大阪",23,1,fukushoku,fukushoku
+"転職 看護師 訪問看護",23,0,none,none
+"40代 大阪 看護師 派遣",23,1,none,none
+"30代 准看護師 ママナース 東京 募集",22,1,fukushoku,fukushoku
+"新宿区 治験 35歳 看護師 転職",22,1,none,none
+"夜勤なし 准看護師",22,1,yakin-nashi,yakin-nashi
+"ナース 美容外科 採用",22,0,clinic,clinic
+"ママナース 准看護師 新宿区 転職",22,1,fukushoku,fukushoku
+"看護師 福岡 転職 ブランク 30代",22,1,fukushoku,fukushoku
+"転職 准看護師 夜勤少なめ",22,1,yakin-nashi,yakin-nashi
+"准看護師 託児所あり 求人 おすすめ 駅近 20代",22,1,none,none
+"復帰 ナース 求人 東京 20代",21,1,fukushoku,fukushoku
+"転職 札幌 准看護師 夜勤少なめ",21,0,yakin-nashi,yakin-nashi
+"准看護師 求人 20代 派遣",21,1,none,none
+"潜在看護師 転職サイト 准看護師",21,1,fukushoku,fukushoku
+"募集 看護師 夜勤なし",21,1,yakin-nashi,yakin-nashi
+"東京 皮膚科クリニック 求人 准看護師 50代",21,1,clinic,clinic
+"高収入 千葉 看護師 求人 おすすめ 20代",21,1,none,none
+"転職 准看護師 日勤のみ",21,1,yakin-nashi,yakin-nashi
+"採用 夜勤専従 50代 看護師",21,1,none,none
+"転職 子育て 復帰 准看護師 沿線",20,1,fukushoku,fukushoku
+"30代 復職 准看護師 転職サイト",20,1,fukushoku,fukushoku
+"潜在看護師 30代 転職 沿線 看護師",20,1,fukushoku,fukushoku
+"看護師 夜勤なし 求人 おすすめ 札幌 50代",20,0,yakin-nashi,yakin-nashi
+"クリニック 募集 看護師 25歳",20,1,clinic,clinic
+"派遣 駅近 求人 おすすめ 50代 准看護師",20,0,none,none
+"夜勤なし 転職サイト ナース 東京 35歳",20,0,yakin-nashi,yakin-nashi
+"ブランク 札幌 看護師 募集 20代",20,1,fukushoku,fukushoku
+"名古屋 募集 夜勤なし ナース",20,1,yakin-nashi,yakin-nashi
+"名古屋 看護師 採用",20,1,none,none
+"転職サイト 福岡 看護師 ブランク",20,1,fukushoku,fukushoku
+"35歳 看護師 夜勤なし",19,1,yakin-nashi,yakin-nashi
+"ナース 東京 復職",19,1,fukushoku,fukushoku
+"ナース 転職 日勤だけ",19,1,yakin-nashi,yakin-nashi
+"35歳 ナース 透析",19,1,none,none
+"転職サイト 残業なし 看護師 千葉 40代",19,1,none,none
+"美容クリニック 新宿区 看護師",19,0,clinic,clinic
+"横浜 准看護師 求人 復帰",19,0,fukushoku,fukushoku
+"50代 転職 千葉 日勤のみ 看護師",19,1,yakin-nashi,yakin-nashi
+"准看護師 福岡 30代 求人 おすすめ 残業少ない",19,0,none,none
+"募集 横浜 看護師 夜勤無し",19,0,yakin-nashi,yakin-nashi
+"訪問看護 看護師 求人 おすすめ 駅近 30代",19,0,none,none
+"日勤のみ 大阪 募集 看護師",19,0,yakin-nashi,yakin-nashi
+"看護師 名古屋 子育て 復帰 募集",19,0,fukushoku,fukushoku
+"求人 おすすめ 東京 看護師",19,0,none,none
+"採用 名古屋 ナース 50代 美容クリニック",19,0,clinic,clinic
+"駅近 採用 准看護師 ICU",19,1,none,none
+"新宿区 ナース 派遣 転職",18,0,none,none
+"30代 転職サイト 看護師 クリニック 駅近",18,0,clinic,clinic
+"沿線 50代 看護師",18,0,none,none
+"採用 オペ室 看護師",18,1,none,none
+"看護師 札幌",18,0,none,none
+"皮膚科クリニック ナース 大阪 20代",18,1,clinic,clinic
+"看護師 ママナース 千葉 35歳 転職",18,1,fukushoku,fukushoku
+"新宿区 ナース 転職 20代",18,1,none,none
+"30代 駅近 募集 看護師",18,1,none,none
+"夜勤 したくない 准看護師 名古屋",17,0,yakin-nashi,yakin-nashi
+"託児所あり 30代 東京 求人 おすすめ 看護師",17,1,none,none
+"札幌 看護師 30代 高収入",17,0,none,none
+"訪問看護 千葉 採用 看護師",17,1,none,none
+"看護師 転職 寮あり",17,1,none,none
+"35歳 転職サイト 名古屋 派遣 ナース",17,1,none,none
+"透析 大阪 看護師 募集 50代",17,0,none,none
+"看護師 残業少ない 25歳",16,0,none,none
+"復職 札幌 求人 おすすめ 看護師",16,1,fukushoku,fukushoku
+"夜勤なし ナース 50代 名古屋",16,1,yakin-nashi,yakin-nashi
+"看護師 20代 ママナース 駅近",16,1,fukushoku,fukushoku
+"求人 おすすめ 東京 美容外科 看護師",16,0,clinic,clinic
+"30代 看護師 募集 パート",16,1,none,none
+"募集 看護師 日勤希望 千葉",16,1,yakin-nashi,yakin-nashi
+"求人 おすすめ ナース 訪問看護 横浜 50代",16,1,none,none
+"転職サイト 40代 夜勤専従 看護師 駅近",16,0,none,none
+"高収入 東京 准看護師 求人",15,0,none,none
+"看護師 中央区 夜勤専従 採用 25歳",15,1,none,none
+"中央区 准看護師 求人 おすすめ 40代 治験",15,1,none,none
+"派遣 准看護師 募集 札幌 25歳",15,0,none,none
+"給料 准看護師 転職 40代",15,1,none,none
+"夜勤無し ナース 40代 転職サイト 新宿区",15,0,yakin-nashi,yakin-nashi
+"採用 高給 20代 看護師 名古屋",14,0,none,none
+"准看護師 福岡 50代",14,0,none,none
+"横浜 看護師 50代 採用",14,1,none,none
+"25歳 千葉 看護師 単発 採用",14,0,none,none
+"看護師 求人 駅近 訪問看護 25歳",14,0,none,none
+"沿線 看護師 ブランク 20代",14,1,fukushoku,fukushoku
+"透析 採用 看護師 横浜",14,0,none,none
+"50代 子育て 復帰 准看護師 採用 沿線",14,1,fukushoku,fukushoku
+"准看護師 40代 美容看護師 札幌 求人 おすすめ",14,1,clinic,clinic
+"看護師 高収入 駅近 採用",14,0,none,none
+"採用 正社員 ナース",14,0,none,none
+"残業なし 沿線 看護師 採用",14,1,none,none
+"ナース 採用 50代 日勤のみ",14,0,yakin-nashi,yakin-nashi
+"ナース 30代 夜勤 減らしたい 転職",13,0,yakin-nashi,yakin-nashi
+"看護師 募集 25歳 クリニック 東京",13,1,clinic,clinic
+"40代 健診 看護師 募集",13,1,none,none
+"日勤のみ ナース 千葉 求人 おすすめ",13,0,yakin-nashi,yakin-nashi
+"40代 ナース 募集 夜勤無し 東京",13,0,yakin-nashi,yakin-nashi
+"看護師 40代 夜勤なし 募集",13,1,yakin-nashi,yakin-nashi
+"募集 看護師",13,0,none,none
+"看護師 20代 夜勤 したくない 転職サイト",13,0,yakin-nashi,yakin-nashi
+"40代 求人 おすすめ 准看護師 新宿区",13,1,none,none
+"転職サイト 看護師 沿線 美容外科",13,0,clinic,clinic
+"50代 看護師 横浜 転職サイト 夜勤 したくない",12,0,yakin-nashi,yakin-nashi
+"転職 沿線 美容看護師 看護師 30代",12,0,clinic,clinic
+"転職サイト 准看護師 給料 50代 中央区",12,0,none,none
+"求人 50代 看護師 横浜 高給",11,0,none,none
+"看護師 オペ室 新宿区 転職サイト 35歳",11,1,none,none
+"看護師 求人 50代 ブランク",11,1,fukushoku,fukushoku
+"求人 おすすめ 看護師",11,0,none,none
+"ナース 40代 求人 おすすめ 名古屋",10,0,none,none
+"20代 夜勤無し 名古屋 求人 ナース",10,0,yakin-nashi,yakin-nashi

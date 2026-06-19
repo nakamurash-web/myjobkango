@@ -99,7 +99,7 @@
   // ※ KWは重複しうる（例「外来 日勤のみ」）。else-ifの順＝優先順位を
   //    「夜勤なし > ブランク復職 > クリニック」と明示的に定義する。
   if (/夜勤[\s　]*(なし|無し|専従なし|したくない|やりたくない|嫌|回避|少なめ|少ない|減らし)|日勤[\s　]*(のみ|だけ|希望)/.test(st)) h.classList.add("kw-yakin-nashi");
-  else if (/ブランク|復職|復帰|離職|ママ|主婦/.test(st)) h.classList.add("kw-fukushoku");
+  else if (/ブランク|復職|復帰|離職|ママ|主婦|潜在(看護|准看)/.test(st)) h.classList.add("kw-fukushoku");
   else if (/クリニック|外来|美容/.test(st))             h.classList.add("kw-clinic");
 
   // --- 年代軸 ---
