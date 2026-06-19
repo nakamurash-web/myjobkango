@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>看護師転職LP デモ（KW出し分け / 1ページ多態）</title>
+
+<!-- ============================================================
+     1) 出し分け用CSS（KW別ブロックは既定で非表示＝チラつき防止）
+     ※ <head>上部に置くこと
+     ============================================================ -->
+<style>
+  :root{
+    --c-main:#0aa37f; --c-accent:#ff6b35; --c-ink:#222; --c-sub:#667;
+    --c-bg:#f6f8f8; --radius:14px; --maxw:760px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+       color:var(--c-ink);background:var(--c-bg);line-height:1.7}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+  img{max-width:100%;height:auto;display:block}
+
+  /* 出し分けブロックは既定で全部非表示 */
+  .kw-block,.age20s-badge,.age30s-badge{display:none}
+  /* <html>のクラスに一致したものだけ表示 */
+  html.kw-yakin-nashi .kw-block.yakin-nashi,
+  html.kw-fukushoku   .kw-block.fukushoku,
+  html.kw-clinic      .kw-block.clinic{display:block;animation:fadeIn .5s ease-out}
+  html.kw-yakin-nashi .kw-block.default,
+  html.kw-fukushoku   .kw-block.default,
+  html.kw-clinic      .kw-block.default{display:none}
+  /* どのKWにも当たらない（直アクセス含む）→ デフォルト訴求 */
+  .kw-block.default{display:block}
+  /* 年代バッジ */
+  html.age20s .age20s-badge,html.age30s .age30s-badge{display:inline-block;animation:fadeIn .5s ease-out}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+  /* ---- FV ---- */
+  .fv{background:linear-gradient(160deg,#0aa37f,#0c7d63);color:#fff;padding:28px 0 32px;text-align:center}
+  .fv h1{font-size:26px;margin:.2em 0;line-height:1.4}
+  .fv .lead{font-size:15px;opacity:.95;margin:.4em 0 1em}
+  .badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.5);
+         border-radius:999px;padding:4px 12px;font-size:13px;margin:2px}
+  .age20s-badge,.age30s-badge{background:var(--c-accent);border:none;font-weight:700}
+
+  /* ---- CTAボタン ---- */
+  .cta{display:block;background:var(--c-accent);color:#fff;text-decoration:none;text-align:center;
+       font-weight:700;font-size:18px;padding:16px;border-radius:999px;margin:18px auto;max-width:420px;
+       box-shadow:0 6px 0 #cc5328;transition:transform .1s}
+  .cta:active{transform:translateY(3px);box-shadow:0 3px 0 #cc5328}
+
+  /* ---- セクション ---- */
+  section{padding:22px 0}
+  h2{font-size:20px;border-left:5px solid var(--c-main);padding-left:10px;margin:0 0 14px}
+  .card{background:#fff;border-radius:var(--radius);padding:16px;margin:12px 0;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+  .rank{display:flex;gap:12px;align-items:flex-start}
+  .rank .no{flex:0 0 auto;width:40px;height:40px;border-radius:50%;background:var(--c-main);color:#fff;
+            font-weight:800;display:flex;align-items:center;justify-content:center}
+  .rank .no.gold{background:#e7b008}.rank .no.silver{background:#9aa}.rank .no.bronze{background:#c97b3c}
+  .rank h3{margin:.1em 0;font-size:17px}
+  .rank .meta{font-size:13px;color:var(--c-sub)}
+  .kw-block{background:#fff;border:2px dashed var(--c-main);border-radius:var(--radius);padding:16px;margin:14px 0}
+  .kw-block h2{border:none;padding:0;color:var(--c-main)}
+
+  /* ---- レスポンシブ：760px超でPCレイアウト ---- */
+  @media(min-width:760px){
+    .fv h1{font-size:34px}
+    .fv{padding:48px 0 56px}
+    h2{font-size:24px}
+  }
+
+  /* ---- デバッグパネル（?debug=1で表示） ---- */
+  #dbg{display:none;position:fixed;left:8px;bottom:8px;z-index:9999;max-width:92vw;
+       background:#111;color:#0f0;font:12px/1.5 ui-monospace,monospace;padding:10px 12px;border-radius:8px;
+       box-shadow:0 4px 20px rgba(0,0,0,.4);max-height:46vh;overflow:auto}
+  #dbg b{color:#fff}#dbg .ok{color:#5f5}#dbg .ng{color:#f66}#dbg a{color:#6cf}
+  html.debug #dbg{display:block}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     2) 出し分けJS：?st=（検索KW） / ?area= / ?grp= を読んで
+        <html>にクラス付与＋エリア名差し込み＋クリックID保存
+        ※ <body>先頭の早いタイミングで実行（チラつき防止）
+     ============================================================ -->
+<script>
+(function(){
+  var p    = new URLSearchParams(location.search);
+  var st   = decodeURIComponent(p.get("st")   || "");
+  var area = decodeURIComponent(p.get("area") || "");
+  var grp  = (p.get("grp") || "").toLowerCase();
+  var h    = document.documentElement;
+
+  // --- 条件軸（正規表現でゆるくマッチ＝何百KWを数パターンに集約）---
+  // ※ 検索語はスペース区切りのことが多いので [\s　]* で語間を吸収する
+  // ※ KWは重複しうる（例「外来 日勤のみ」）。else-ifの順＝優先順位を
+  //    「夜勤なし > ブランク復職 > クリニック」と明示的に定義する。
+  if (/夜勤[\s　]*(なし|無し|専従なし|したくない|やりたくない|嫌|回避)|日勤[\s　]*(のみ|だけ|希望)/.test(st)) h.classList.add("kw-yakin-nashi");
+  else if (/ブランク|復職|復帰|離職|ママ|主婦/.test(st)) h.classList.add("kw-fukushoku");
+  else if (/クリニック|外来|美容/.test(st))             h.classList.add("kw-clinic");
+
+  // --- 年代軸 ---
+  if (/(20代|2[0-9]歳)/.test(st)) h.classList.add("age20s");
+  else if (/(30代|3[0-9]歳)/.test(st)) h.classList.add("age30s");
+
+  // --- KWグループ（広告側から明示。除外KW設計で意図純度を担保）---
+  if (grp) h.classList.add("grp-" + grp.replace(/[^a-z0-9_-]/g,""));
+
+  // --- エリア名の差し込み（XSS回避のため textContent）---
+  if (area){
+    document.addEventListener("DOMContentLoaded",function(){
+      document.querySelectorAll("[data-area-token]").forEach(function(el){
+        el.textContent = el.getAttribute("data-area-token").replace(/\{area\}/g, area);
+      });
+    });
+  }
+
+  // --- クリックID保存（CV計測の引き継ぎ用）---
+  var IDS=['gclid','wbraid','yclid','fbclid','msclkid','ttclid','ldtag_cl'];
+  try{
+    var saved=JSON.parse(sessionStorage.getItem('tracking_click_ids')||'{}');
+    IDS.forEach(function(k){var v=p.get(k); if(v) saved[k]=v;});
+    sessionStorage.setItem('tracking_click_ids', JSON.stringify(saved));
+  }catch(e){}
+
+  if (p.get("debug")==="1") h.classList.add("debug");
+})();
+</script>
+
+<!-- ============ FV（ファーストビュー） ============ -->
+<header class="fv">
+  <div class="wrap">
+    <span class="badge age20s-badge">20代の転職に強い！</span>
+    <span class="badge age30s-badge">30代のキャリアUP向け！</span>
+
+    <!-- 条件別の見出しを出し分け（該当1つだけ表示） -->
+    <div class="kw-block yakin-nashi">
+      <h1 data-area-token="{area}で夜勤なし・日勤のみの看護師求人">夜勤なし・日勤のみの看護師求人</h1>
+      <p class="lead">ワークライフバランス重視のあなたへ。夜勤なし求人を厳選。</p>
+    </div>
+    <div class="kw-block fukushoku">
+      <h1 data-area-token="{area}でブランクOK・復職支援が手厚い求人">ブランクOK・復職支援が手厚い求人</h1>
+      <p class="lead">久しぶりの復帰も安心。研修・サポート体制で選ぶ。</p>
+    </div>
+    <div class="kw-block clinic">
+      <h1 data-area-token="{area}のクリニック・外来（日勤）求人">クリニック・外来（日勤）の求人</h1>
+      <p class="lead">残業少なめ・オンオフ重視。クリニック求人に特化。</p>
+    </div>
+    <div class="kw-block default">
+      <h1 data-area-token="{area}であなたに合う看護師求人">あなたに合う看護師求人を無料でご紹介</h1>
+      <p class="lead">条件・エリアからピッタリの転職サービスを比較。完全無料。</p>
+    </div>
+
+    <!-- CTA（クリックID引き継ぎ付き） -->
+    <a class="cta js-affiliate" href="https://example.com/affiliate/redirect" data-cv="main">
+      無料で求人を見てみる →
+    </a>
+  </div>
+</header>
+
+<!-- ============ ランキング（デモ：プレースホルダ3件） ============ -->
+<section class="wrap">
+  <h2 data-area-token="{area}のおすすめ看護師転職サービス">おすすめ看護師転職サービス TOP3</h2>
+
+  <div class="card rank">
+    <div class="no gold">1</div>
+    <div>
+      <h3>サービスA（デモ）</h3>
+      <p class="meta">求人数：◎／サポート：◎／エリア：全国</p>
+      <a class="cta js-affiliate" href="https://example.com/affiliate/a" data-cv="rank-a">公式サイトで見る →</a>
+    </div>
+  </div>
+  <div class="card rank">
+    <div class="no silver">2</div>
+    <div>
+      <h3>サービスB（デモ）</h3>
+      <p class="meta">求人数：◯／サポート：◎／エリア：都市部</p>
+      <a class="cta js-affiliate" href="https://example.com/affiliate/b" data-cv="rank-b">公式サイトで見る →</a>
+    </div>
+  </div>
+  <div class="card rank">
+    <div class="no bronze">3</div>
+    <div>
+      <h3>サービスC（デモ）</h3>
+      <p class="meta">求人数：◯／サポート：◯／エリア：全国</p>
+      <a class="cta js-affiliate" href="https://example.com/affiliate/c" data-cv="rank-c">公式サイトで見る →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 記事内：条件別の差し込みブロック ============ -->
+<section class="wrap">
+  <div class="kw-block yakin-nashi">
+    <h2>夜勤なしで働くためのポイント</h2>
+    <p>外来・クリニック・健診センター・企業看護師など、日勤中心の職場の選び方を解説。（デモ本文）</p>
+  </div>
+  <div class="kw-block fukushoku">
+    <h2>ブランクからの復職を成功させるには</h2>
+    <p>復職者向け研修・教育体制が整った職場の見極め方を解説。（デモ本文）</p>
+  </div>
+  <div class="kw-block clinic">
+    <h2>クリニック転職のメリットと注意点</h2>
+    <p>残業・オンコールの実態、給与レンジ、人気クリニックの探し方。（デモ本文）</p>
+  </div>
+  <div class="kw-block default">
+    <h2>はじめての看護師転職の進め方</h2>
+    <p>条件整理 → サービス登録 → 面談 → 求人紹介、の流れを解説。（デモ本文）</p>
+  </div>
+
+  <a class="cta js-affiliate" href="https://example.com/affiliate/redirect" data-cv="bottom">
+    無料登録して求人を見る →
+  </a>
+</section>
+
+<footer class="wrap" style="padding:24px 0;color:#889;font-size:12px;text-align:center">
+  ※ これは仕組み検証用のデモです。リンク先・数値はすべてプレースホルダです。
+</footer>
+
+<!-- デバッグパネル本体 -->
+<div id="dbg"></div>
+
+<!-- ============================================================
+     3) 共通JS：アフィリンクのクリックID引き継ぎ＋CV発火＋自己チェック
+     ============================================================ -->
+<script>
+(function(){
+  // クリックIDをアフィリンクに引き継ぐ
+  function appendIds(url){
+    try{
+      var ids=JSON.parse(sessionStorage.getItem('tracking_click_ids')||'{}');
+      var u=new URL(url, location.href);
+      Object.keys(ids).forEach(function(k){ u.searchParams.set(k, ids[k]); });
+      return u.toString();
+    }catch(e){ return url; }
+  }
+  // CV発火（デモ：実運用では gtag のCVタグに置換）
+  function fireCV(label){
+    if (typeof gtag==='function'){
+      gtag('event','conversion',{'send_to':'AW-XXXXXXX/XXXX','event_label':label});
+    }
+    console.log('CV fired:', label);
+  }
+  document.querySelectorAll('a.js-affiliate').forEach(function(a){
+    a.addEventListener('click',function(){
+      fireCV(a.getAttribute('data-cv')||'unknown');
+      a.href = appendIds(a.getAttribute('href'));   // クリック直前にID付与
+    });
+  });
+
+  // ---- 自己チェック（?debug=1）----
+  if (new URLSearchParams(location.search).get('debug')!=='1') return;
+  var d=document.getElementById('dbg');
+  var cls=document.documentElement.className||'(なし)';
+  var ids=JSON.parse(sessionStorage.getItem('tracking_click_ids')||'{}');
+  var links=[].slice.call(document.querySelectorAll('a.js-affiliate'));
+  var rows=links.map(function(a){
+    var href=a.getAttribute('href')||'';
+    var ok = /^https?:\/\//.test(href) && href.indexOf('example.com')===-1 ? 'ok' : (href.indexOf('example.com')>-1?'ng':'ng');
+    var hasCv = a.getAttribute('data-cv') ? 'ok':'ng';
+    return '<div>['+(ok==='ng'?'<span class=ng>要差替/プレースホルダ</span>':'<span class=ok>OK</span>')+
+           '] CV:<span class="'+hasCv+'">'+(a.getAttribute('data-cv')||'なし')+'</span> '+
+           '<a href="'+href+'">'+href.replace(/^https?:\/\//,'')+'</a></div>';
+  }).join('');
+  d.innerHTML =
+    '<b>■ 出し分け判定</b><br>&lt;html class="'+cls+'"&gt;<br>'+
+    '<b>■ クリックID</b> '+(Object.keys(ids).length? JSON.stringify(ids):'(なし)')+'<br>'+
+    '<b>■ アフィリンク '+links.length+'件（CV/差替チェック）</b>'+rows+
+    '<br><b>■ 表示中ブロック</b> '+
+      [].slice.call(document.querySelectorAll('.kw-block')).filter(function(e){
+        return getComputedStyle(e).display!=='none';
+      }).map(function(e){return e.className.replace('kw-block','').trim();}).join(' / ');
+})();
+</script>
+</body>
+</html>
